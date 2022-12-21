@@ -1,0 +1,205 @@
+{
+    "content_token": [
+        "a",
+        "akesi",
+        "ala",
+        "alasa",
+        "ale",
+        "ali",
+        "anpa",
+        "ante",
+        "awen",
+        "epiku",
+        "esun",
+        "ijo",
+        "ike",
+        "ilo",
+        "insa",
+        "jaki",
+        "jan",
+        "jasima",
+        "jelo",
+        "jo",
+        "kala",
+        "kalama",
+        "kama",
+        "kasi",
+        "ken",
+        "kepeken",
+        "kijetesantakalu",
+        "kili",
+        "kin",
+        "kipisi",
+        "kiwen",
+        "ko",
+        "kokosila",
+        "kon",
+        "ku",
+        "kule",
+        "kulupu",
+        "kute",
+        "lanpan",
+        "lape",
+        "laso",
+        "lawa",
+        "leko",
+        "len",
+        "lete",
+        "lili",
+        "linja",
+        "lipu",
+        "loje",
+        "lon",
+        "luka",
+        "lukin",
+        "lupa",
+        "ma",
+        "mama",
+        "mani",
+        "meli",
+        "meso",
+        "mi",
+        "mije",
+        "misikeke",
+        "moku",
+        "moli",
+        "monsi",
+        "monsuta",
+        "mu",
+        "mun",
+        "musi",
+        "mute",
+        "namako",
+        "nanpa",
+        "nasa",
+        "nasin",
+        "nena",
+        "ni",
+        "nimi",
+        "noka",
+        "oko",
+        "olin",
+        "ona",
+        "open",
+        "pakala",
+        "pali",
+        "palisa",
+        "pan",
+        "pana",
+        "pilin",
+        "pimeja",
+        "pini",
+        "pipi",
+        "poka",
+        "poki",
+        "pona",
+        "pu",
+        "sama",
+        "seli",
+        "selo",
+        "sewi",
+        "sijelo",
+        "sike",
+        "sin",
+        "sina",
+        "sinpin",
+        "sitelen",
+        "soko",
+        "sona",
+        "soweli",
+        "suli",
+        "suno",
+        "supa",
+        "suwi",
+        "tan",
+        "taso",
+        "tawa",
+        "telo",
+        "tenpo",
+        "toki",
+        "tomo",
+        "tonsi",
+        "tu",
+        "unpa",
+        "uta",
+        "utala",
+        "walo",
+        "wan",
+        "waso",
+        "wawa",
+        "weka",
+        "wile"
+    ],
+    "ignore_li": [
+        "mi",
+        "sina"
+    ],
+    "interjection": [
+        "a",
+        "mu",
+        "taso"
+    ],
+    "preverb": [
+        "alasa",
+        "awen",
+        "kama",
+        "ken", 
+        "lukin",
+        "open",
+        "pini",
+        "wile"
+    ],
+    "question_token": [
+        "seme"
+    ],
+    "number_token": [
+        "ale",
+        "ali",
+        "mute",
+        "luka",
+        "tu",
+        "wan"
+    ],
+    "ordinal_marker": [
+        "nanpa"
+    ],
+    "means_particle": [
+        "kepeken"
+    ],
+    "location_particle": [
+        "lon"
+    ],
+    "similarity_particle": [
+        "sama"
+    ],
+    "causality_particle": [
+        "tan"
+    ],
+    "indirect_object_particle": [
+        "tawa"
+    ],
+    "context_particle": [
+        "la"
+    ],
+    "modifier_particle": [
+        "pi"
+    ],
+    "yn_question_particle": [
+        "ala"
+    ],
+    "imp_pred_particle": [
+        "o"
+    ],
+    "direct_object_particle": [
+        "e"
+    ],
+    "predicate_particle": [
+        "li"
+    ],
+    "add_subject_particle": [
+        "en"
+    ],
+    "option_particle": [
+        "anu"
+    ]
+}

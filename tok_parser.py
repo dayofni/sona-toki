@@ -59,7 +59,6 @@ def generate_interpretations(tokens):
     permutations = find_permutations(tags)
     return permutations
 
-
 class Parser:
     def __init__(self, tokens, tags):
         self.tokens = tokens
@@ -324,3 +323,4 @@ class Parser:
                     return []
     
         return parse
+

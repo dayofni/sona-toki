@@ -1,3 +1,4 @@
+
 class Phrase:
     def __init__(self, token, tag):
         self.head = (token, tag)
@@ -30,6 +31,11 @@ class Phrase:
     def __repr__(self, mode="type"):
         values = [i[0] for i in [self.head] + self.adjectives]
         return f"Phrase({values}, number={self.number}, ordinal={self.ordinal}, ordinal={self.ordinal})"
+    
+    def __hash__(self):
+        #* I don't know how to do this well, so excuse my horrible code
+        struct = [self.head, self.number, self.ordinal] + self.adjectives + self.types
+        return hash(tuple(struct))
 
 class Number:
     def __init__(self, token, ordinal=False):
@@ -54,6 +60,11 @@ class Number:
     
     def __repr__(self):
         return f"Number({self.value}, ordinal={self.ordinal})"
+    
+    def __hash__(self):
+        #* I don't know how to do this well, so excuse my horrible code
+        struct = [self.value, self.ordinal] + self.tokens
+        return hash(tuple(struct))
 
 class YNQuestion:
     def __init__(self, Phrase):
@@ -78,7 +89,9 @@ class Object:
         return f"Object({values}, number={self.number})"
     
     def __hash__(self):
-        ...
+        #* I don't know how to do this well, so excuse my horrible code
+        struct = [self.head, self.number, self.ignore_li, self.ordinal] + self.adjectives + self.types
+        return hash(tuple(struct))
 
 class Predicate:
     def __init__(self, phrase):
@@ -98,13 +111,27 @@ class Predicate:
     def __repr__(self):
         values = [i[0] for i in [self.head] + self.adjectives]
         return f"Predicate({values}, number={self.number}, ordinal={self.ordinal}, types={self.types})"
+    
+    def __hash__(self):
+        #* I don't know how to do this well, so excuse my horrible code
+        struct = [self.head, self.number, self.ordinal] + self.adjectives + self.types
+        return hash(tuple(struct))
+
+class ContextPhrase:
+    def __init__(self, tokens):
+        self.tokens = tokens
+    
+    def __repr__(self):
+        return f"ContextPhrase({self.tokens})"
+    
+    def __hash__(self):
+        return hash(tuple(self.tokens))
 
 #! Subclasses
 
 class Subject(Object):
     def __init__(self, phrase, ignore_li=False):
         super().__init__(phrase, ignore_li=ignore_li)
-        self.ignore_li = ignore_li
     
     def __repr__(self):
         values = [i[0] for i in [self.head] + self.adjectives]
@@ -213,13 +240,3 @@ class Modifier(Object):
     def __repr__(self):
         values = [i[0] for i in [self.head] + self.adjectives]
         return f"Modifier({values}, number={self.number}, ordinal={self.ordinal}, types={self.types})"
-
-class ContextPhrase:
-    def __init__(self, tokens):
-        self.tokens = tokens
-    
-    def __repr__(self):
-        return f"ContextPhrase({self.tokens})"
-    
-    def __hash__(self):
-        return hash(tuple(self.tokens))

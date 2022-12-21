@@ -16,12 +16,11 @@ def translate_string(string):
             parser = Parser(sentence, interp)
             if parser.parse != []:
                 allowed_inters.append(parser.parse)
-        for interp in allowed_inters:
+        for interp in set([tuple(i) for i in allowed_inters]):
             pprint(interp)
             print()
     return allowed_inters
 
-#translate_string("pana sona")
 print()
-translate_string("sina toki ala toki e toki pona? mi ken la mi ken pana e sona pi toki pona")
+translate_string("taso ona o pana e sona sina pi musi Manka tawa mi")
 print()
