@@ -116,7 +116,7 @@ class Parser:
                     if type(parse[back]) == Phrase and type(parse[forward]) == Phrase:
                         back_val, forward_val = parse[back], parse[forward]
                         if back_val.head[0] == forward_val.head[0]:
-                            parse[pos] = YNQuestion(forward_val)
+                            parse[i] = YNQuestion(forward_val)
                             del (parse[back], parse[forward])
         
         #? Step 4: Apply particles and prepositions
@@ -313,10 +313,9 @@ class Parser:
                 if not predicate_verb_passed:
                     return []
             elif type(token) == Interjection:
-                if context and not subject_passed:
+                if context and not subject_passed and len(inp) == 1:
                     return []
             
-            #! ---- NOT COMPLETE ----
             elif type(token) == ContextPhrase:
                 phrase_parse = self.check_grammar(token.tokens, context=True)
                 if phrase_parse == []:
