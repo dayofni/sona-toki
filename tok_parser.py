@@ -74,7 +74,6 @@ class Parser:
         phrase_tokens = [
             "content_token",
             "question_token",
-            "proper_adjective",
             "preverb"
         ]
         
@@ -85,6 +84,9 @@ class Parser:
                     parse[list(parse.keys())[-1]].add(token, tag)
                 else:
                     parse[t] = Phrase(token, tag)
+            elif tag == "proper_adjective":
+                if t-1 >= 0 and self.tags[t-1] in phrase_tokens:
+                    parse[list(parse.keys())[-1]].add(token, tag)
             elif tag == "number_token" or tag == "ordinal_marker":
                 if t-1 >= 0 and self.tags[t-1] in ["number_token", "ordinal_marker"]:
                     parse[list(parse.keys())[-1]].add(token)
@@ -274,7 +276,7 @@ class Parser:
         if any([type(i) not in allowed_types for i in inp]):
             return []
         
-        if len(self.tokens) > 0:
+        if len(self.tokens) > 0 and self.tokens[0] in word_tags.keys():
             ignore_li = "ignore_li" in word_tags[self.tokens[0]]
             #print(ignore_li)
         else:
@@ -309,7 +311,7 @@ class Parser:
                 elif not subject_passed:
                     return []
                 predicate_verb_passed = True
-            elif type(token) in [DirectObject, IndirectObject, AddSubject, Means, Location, Similar, Cause]:
+            elif type(token) in [DirectObject, IndirectObject, Means, Location, Similar, Cause]:
                 if not predicate_verb_passed:
                     return []
             elif type(token) == Interjection:
