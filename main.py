@@ -1,8 +1,7 @@
 from tok_lexer import *
 from tok_parser import *
+from tok_translator import *
 from pprint import pprint
-
-# Example use of tok_lexer and tok_parser.
 
 def translate_string(string):
     sentences = lexer(string)
@@ -16,11 +15,14 @@ def translate_string(string):
             parser = Parser(sentence, interp)
             if parser.parse != []:
                 allowed_inters.append(parser.parse)
-        for interp in set([tuple(i) for i in allowed_inters]):
+        interpretations = set([tuple(i) for i in allowed_inters])
+        interpretations = sorted(list(interpretations), key=rank_parse)
+        for interp in interpretations[:5]:
             pprint(interp)
-            print()
+            print(rank_parse(interp), "\n")
     return allowed_inters
 
+#translate_string("pana sona")
 print()
-translate_string("taso ona o pana e sona sina pi musi Manka tawa mi")
+translate_string("sina toki ala toki kepeken toki pona a? ni la o toki pona!")
 print()

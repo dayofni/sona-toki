@@ -163,14 +163,14 @@ class Parser:
             
             #! Predicates and verbs
             
-            elif item == "predicate_particle" and forward != None and type(forward) != str:
+            elif item == "predicate_particle" and forward != None and type(forward) in [Phrase, YNQuestion]:
                 if "direct_object_particle" in self.tags or "indirect_object_particle" in self.tags:
                     parse_ret[i] = Verb(forward)
                 else:
                     parse_ret[i] = Predicate(forward)
                 deleted.append(forward_pos)
             
-            elif item == "imp_pred_particle" and forward != None and type(forward) != str:
+            elif item == "imp_pred_particle" and forward != None and type(forward) in [Phrase, YNQuestion]:
                 if "direct_object_particle" in self.tags or "indirect_object_particle" in self.tags:
                     parse_ret[i] = ImpVerb(forward)
                 else:
@@ -190,25 +190,25 @@ class Parser:
                 parse_ret[i] = AddSubject(forward)
                 deleted.append(forward_pos)
             
-            elif item == "option_particle" and forward != None and type(forward) != str:
+            elif item == "option_particle" and forward != None and type(forward) == Phrase:
                 parse_ret[i] = Option(forward)
                 deleted.append(forward_pos)
             
             #! Prepositions and interjections
             
-            elif item == "means_particle" and forward != None and type(forward) != str:
+            elif item == "means_particle" and forward != None and type(forward) == Phrase:
                 parse_ret[i] = Means(forward)
                 deleted.append(forward_pos)
-            elif item == "location_particle" and forward != None and type(forward) != str:
+            elif item == "location_particle" and forward != None and type(forward) == Phrase:
                 parse_ret[i] = Location(forward)
                 deleted.append(forward_pos)
-            elif item == "similarity_particle" and forward != None and type(forward) != str:
+            elif item == "similarity_particle" and forward != None and type(forward) == Phrase:
                 parse_ret[i] = Similar(forward)
                 deleted.append(forward_pos)
-            elif item == "causality_particle" and forward != None and type(forward) != str:
+            elif item == "causality_particle" and forward != None and type(forward) == Phrase:
                 parse_ret[i] = Cause(forward)
                 deleted.append(forward_pos)
-            elif item == "modifier_particle" and forward != None and type(forward) != str:
+            elif item == "modifier_particle" and forward != None and type(forward) == Phrase:
                 parse_ret[i] = Modifier(forward)
                 deleted.append(forward_pos)
             
@@ -304,7 +304,7 @@ class Parser:
                 if not subject_passed or predicate_verb_passed:
                     return []
             elif type(token) in [Verb, Predicate, ImpVerb, ImpPredicate]:
-                if token.number != None:
+                if token.number != None and type(token) not in [Predicate, ImpPredicate]:
                     return []
                 if type(token) in [ImpVerb, ImpPredicate]:
                     imperative = True
