@@ -3,7 +3,7 @@ import json
 from pprint import pprint
 from word_classes import *
 
-with open("parts_of_speech.json") as f:
+with open("data/parts_of_speech.json") as f:
     #! Let's do this *once*
     categories = json.loads(f.read())
     word_tags = {}

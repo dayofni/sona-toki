@@ -32,9 +32,12 @@ def rank_parse(parse):
                     penalty += 10
                 elif not token.ordinal:
                     penalty += 5
+            
         elif type(token) == ContextPhrase:
-            penalty += rank_parse(token.tokens) 
-    
+            penalty += rank_parse(token.tokens)
+        
+        elif type(token) == Interjection:
+            penalty += 5
     return penalty
 
 def translate_phrase():

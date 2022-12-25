@@ -7,6 +7,8 @@ class Phrase:
         self.number = None
         self.ordinal = False
         
+        self.values = [(token, tag)]
+        
         if tag == "question_token":
             self.types.append("question")
         
@@ -26,11 +28,11 @@ class Phrase:
         if len(self.types) > 1 and "generic" in self.types:
             self.types.remove("generic")
         
+        self.values.append((token, tag))
         self.adjectives.append((token, tag))
     
     def __repr__(self, mode="type"):
-        values = [i[0] for i in [self.head] + self.adjectives]
-        return f"Phrase({values}, number={self.number}, ordinal={self.ordinal}, ordinal={self.ordinal})"
+        return f"Phrase({self.values}, number={self.number}, ordinal={self.ordinal}, ordinal={self.ordinal})"
     
     def __hash__(self):
         #* I don't know how to do this well, so excuse my horrible code
@@ -67,9 +69,10 @@ class Number:
         return hash(tuple(struct))
 
 class YNQuestion:
-    def __init__(self, Phrase):
-        self.head = Phrase.head
-        self.adjectives = Phrase.adjectives
+    def __init__(self, phrase):
+        self.head = phrase.head
+        self.adjectives = phrase.adjectives
+        self.values = phrase.values
     
     def __repr__(self):
         values = [self.head] + self.adjectives
@@ -83,6 +86,7 @@ class Object:
         self.number = phrase.number
         self.ignore_li = ignore_li
         self.ordinal = phrase.ordinal
+        self.values = phrase.values
     
     def __repr__(self):
         values = [i[0] for i in [self.head] + self.adjectives]
@@ -101,12 +105,14 @@ class Predicate:
             self.types = phrase.types
             self.number = phrase.number
             self.ordinal = phrase.ordinal
+            self.values = phrase.values
         elif type(phrase) == YNQuestion:
             self.head = phrase.head
             self.adjectives = phrase.adjectives
             self.types = ["YNQuestion"]
             self.number = None
             self.ordinal = False
+            self.values = phrase.values
     
     def __repr__(self):
         values = [i[0] for i in [self.head] + self.adjectives]

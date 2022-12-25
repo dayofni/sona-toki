@@ -1,6 +1,7 @@
 from tok_lexer import *
 from tok_parser import *
 from tok_translator import *
+from tok_gloss import *
 from pprint import pprint
 
 def translate_string(string):
@@ -18,11 +19,11 @@ def translate_string(string):
         interpretations = set([tuple(i) for i in allowed_inters])
         interpretations = sorted(list(interpretations), key=rank_parse)
         for interp in interpretations[:5]:
-            pprint(interp)
+            print(gloss_parse(interp))
             print(rank_parse(interp), "\n")
     return allowed_inters
 
 #translate_string("pana sona")
 print()
-translate_string("sina toki ala toki kepeken toki pona a? ni la o toki pona!")
+translate_string("jan utala en jan pona li wile e utala pini e pona tawa jan ale.")
 print()
