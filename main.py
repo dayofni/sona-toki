@@ -1,7 +1,7 @@
 from tok_lexer import *
 from tok_parser import *
 from tok_translator import *
-from tok_gloss import *
+from tok_misc import *
 from pprint import pprint
 
 def translate_string(string):
