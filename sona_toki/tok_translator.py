@@ -1,5 +1,5 @@
 
-from word_classes import *
+from sona_toki.word_classes import *
 
 def rank_parse(parse):
     # Penalise for overzealous length
@@ -28,7 +28,7 @@ def rank_parse(parse):
             penalty += len([token.head] + token.adjectives) * 5
             # Penalise for uncertain numbers very lightly
             if token.number:
-                if token.number % 5 == 0: # ale/ali, mute, luka
+                if token.number % 5 == 0 and not token.ordinal: # ale/ali, mute, luka
                     penalty += 10
                 elif not token.ordinal:
                     penalty += 5

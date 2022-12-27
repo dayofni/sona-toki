@@ -1,9 +1,8 @@
 
 import json
-from pprint import pprint
-from word_classes import *
+from sona_toki.word_classes import *
 
-with open("data/parts_of_speech.json") as f:
+with open("sona_toki/data/parts_of_speech.json") as f:
     #! Let's do this *once*
     categories = json.loads(f.read())
     word_tags = {}
@@ -64,10 +63,12 @@ class Parser:
         self.tokens = tokens
         self.tags = tags
         self.length = len(tokens)
-        
+        self.run()
+    
+    def run(self):
         self.parse_text()
         self.parse = self.check_grammar()
-
+    
     def parse_text(self):
         parse = {}
         prev_phrase = 0
@@ -108,6 +109,14 @@ class Parser:
                     del parse[i]
                     
                     parse[back_index].set_number(item)
+                else:
+                    number = Phrase("nanpa", "number_token")
+                    number.set_number(item)
+                    parse[i] = number
+            elif type(item) == Number:
+                number = Phrase("nanpa", "number_token")
+                number.set_number(item)
+                parse[i] = number
         
         #? Step 3: determine y/n questions
         index = 0
@@ -317,10 +326,12 @@ class Parser:
             elif type(token) == Interjection:
                 if context and not subject_passed and len(inp) == 1:
                     return []
-            
             elif type(token) == ContextPhrase:
                 phrase_parse = self.check_grammar(token.tokens, context=True)
                 if phrase_parse == []:
+                    return []
+            elif type(token) == Modifier:
+                if token.adjectives == [] and not token.number:
                     return []
     
         return parse

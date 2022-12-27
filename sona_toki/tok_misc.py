@@ -1,8 +1,8 @@
 
 import json
-from word_classes import *
+from sona_toki.word_classes import *
 
-with open("data/gloss.json") as f:
+with open("sona_toki/data/gloss.json") as f:
     gloss_data = json.loads(f.read())
 
 gloss_classes = {
