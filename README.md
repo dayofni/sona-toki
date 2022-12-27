@@ -37,7 +37,7 @@ The toki pona lexer used in this project. Consisting of about one function of 20
 > sentences = lexer("o awen! o awen!")
 > for i in sentences:
 >    print(i) # -> [["o", "awen"], ["o", "awen"]]
-```
+> ```
 
 ### tok_parser.py
 The heart of like 90% of this project; this is the parser behind all of these tools and features. Also happens to be my favourite child. It takes in all of the tokens given to us from `tok_lexer.py` and spits out... multiple groups of tokens that ever so happen to conform to toki pona grammar, I guess?
@@ -138,7 +138,7 @@ Pretty blank file right now. Currently contains one function, `rank_parse()`, wh
 > parse = [...] # From the phrase "toki a!"
 > parse_value = rank_parse(parse)
 > print(parse_value) # -> 13
-```
+> ```
 
 ### tok_misc.py
 A collection of miscellanious tools.  
