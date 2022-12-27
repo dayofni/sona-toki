@@ -35,7 +35,7 @@ The toki pona lexer used in this project. Consisting of about one function of 20
 > sentences = lexer("o awen! o awen!")
 > for i in sentences:
 >    print(i) # -> [["o", "awen"], ["o", "awen"]]
-```
+> ```
 
 #### tok_parser.py
 The heart of like 90% of this project; this is the parser behind all of these tools and features. Also happens to be my favourite child. It takes in all of the tokens given to us from `tok_lexer.py` and spits out... multiple groups of tokens that ever so happen to conform to toki pona grammar, I guess?
@@ -46,7 +46,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > n = 11
 > bases = [2, 3, 1, 3, 2]
 > print(translate_variable_base(n, bases)) # -> [1, 2, 0, 1, 0]
-```
+> ```
 
 > ##### function product(seq)
 > Finds the product of a given iterable.
@@ -54,7 +54,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > ```py
 > seq = [1, 2, 3, 4, 5, 6]
 > print(product(seq)) # -> 720
-```
+> ```
 
 > ##### function find_permutations(syl_pos)
 > Finds all possible permutations of a given input.
@@ -66,7 +66,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 >      ("b", "a", "c")
 > ]
 > print(find_permutations(paths)) # -> [("a", 1, "b"), ..., ("b", 1, "c")] (6 items)
-```
+> ```
 
 > ##### function generate_interpretations(tokens)
 > Converts a series of tokens from `tok_lexer.py` into a series of possible grammatical permutations based on what functions that particular token can play.
@@ -75,7 +75,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > sentence = ["toki", "a"]
 > print(generate_interpretations(sentence))
 > # --> [['content_token', 'content_token'], ..., ['interjection', 'interjection']]
-```
+> ```
 
 > ##### class Parser(tokens, tags)
 > Generates a `Parser()` object. Takes in `tokens` (the words in the sentence) and `tags` (the parts of speech generated from `generate_interpretations()`)
