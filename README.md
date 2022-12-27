@@ -26,7 +26,7 @@ I used the power of thinking outside a box because I really cannot understand th
 8. **Did you know that there are no apostrophes in this entire README file?**
 Yes, yes I did. :3
 
-#### tok_lexer.py
+### tok_lexer.py
 The toki pona lexer used in this project. Consisting of about one function of 20 lines of actual code, it works ever so slighly differently to the `str.split()` method given to us by Vanilla Python (TM). 
 > ##### function tok_parser.lexer(input_str)
 >Takes an input string and returns a series of tokens, grouped by sentence.
@@ -37,7 +37,7 @@ The toki pona lexer used in this project. Consisting of about one function of 20
 >    print(i) # -> [["o", "awen"], ["o", "awen"]]
 > ```
 
-#### tok_parser.py
+### tok_parser.py
 The heart of like 90% of this project; this is the parser behind all of these tools and features. Also happens to be my favourite child. It takes in all of the tokens given to us from `tok_lexer.py` and spits out... multiple groups of tokens that ever so happen to conform to toki pona grammar, I guess?
 > ##### function translate_variable_base(n, bases)
 > Converts a number `n` from base-10 to a base defined by `bases`.
@@ -81,10 +81,10 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > Generates a `Parser()` object. Takes in `tokens` (the words in the sentence) and `tags` (the parts of speech generated from `generate_interpretations()`)
 > **Example usage:** see `example.py`
 
-#### word_classes.py
+### word_classes.py
 Wow, a sudden change from the naming convention, classy! This holds all of the different complex token classes mentioned in `tok_parser.py`. This is going to take forever to list...
-#### tok_translator.py
-#### tok_misc.py
-#### tok_spellcheck.py
-#### all.py
-#### base.py
+### tok_translator.py
+### tok_misc.py
+### tok_spellcheck.py
+### all.py
+### base.py
