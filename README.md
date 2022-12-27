@@ -31,7 +31,7 @@ The toki pona lexer used in this project. Consisting of about one function of 20
 > ##### function tok_parser.lexer(input_str)
 >Takes an input string and returns a series of tokens, grouped by sentence.
 >**Example usage:**
->```py
+>```python
 > sentences = lexer("o awen! o awen!")
 > for i in sentences:
 >    print(i) # -> [["o", "awen"], ["o", "awen"]]
@@ -42,7 +42,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > ##### function translate_variable_base(n, bases)
 > Converts a number `n` from base-10 to a base defined by `bases`.
 > **Example usage:**
-> ``` py
+> ``` python
 > n = 11
 > bases = [2, 3, 1, 3, 2]
 > print(translate_variable_base(n, bases)) # -> [1, 2, 0, 1, 0]
@@ -51,7 +51,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > ##### function product(seq)
 > Finds the product of a given iterable.
 > **Example usage**
-> ```py
+> ```python
 > seq = [1, 2, 3, 4, 5, 6]
 > print(product(seq)) # -> 720
 > ```
@@ -59,7 +59,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > ##### function find_permutations(syl_pos)
 > Finds all possible permutations of a given input.
 > **Example usage:**
-> ```py
+> ```python
 > paths = [
 >      ("a", "b"),
 >      (1),
@@ -71,7 +71,7 @@ The heart of like 90% of this project; this is the parser behind all of these to
 > ##### function generate_interpretations(tokens)
 > Converts a series of tokens from `tok_lexer.py` into a series of possible grammatical permutations based on what functions that particular token can play.
 > **Example usage:**
-> ```py
+> ```python
 > sentence = ["toki", "a"]
 > print(generate_interpretations(sentence))
 > # --> [['content_token', 'content_token'], ..., ['interjection', 'interjection']]
