@@ -29,11 +29,11 @@ Yes, yes I did. :3
 #### tok_lexer.py
 The toki pona lexer used in this project. Consisting of about one function of 20 lines of actual code, it works ever so slighly differently to the `str.split()` method given to us by Vanilla Python (TM). 
 > ##### tok_parser.lexer(input_str)
-Takes an input string and returns a series of tokens, grouped by sentence.
-**Example usage:**
-```py
-sentences = lexer("o awen! o awen!")
-for i in sentences:
-    print(i) # -> [["o", "awen"], ["o", "awen"]]```
+>Takes an input string and returns a series of tokens, grouped by sentence.
+>**Example usage:**
+>```py
+> sentences = lexer("o awen! o awen!")
+> for i in sentences:
+>    print(i) # -> [["o", "awen"], ["o", "awen"]]```
 
 <TODO: more documentation>
