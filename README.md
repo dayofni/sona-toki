@@ -144,19 +144,9 @@ Pretty blank file right now. Currently contains one function, `rank_parse()`, wh
 A collection of miscellanious tools.  
 Half of these should be moved elsewhere, to be honest.
 
-### tok_spellcheck.py
-Temporary file containing a spellchecking experiment. This will be merged into `tok_parser` later.
-
 ### all.py
 An import that allows you to import any function from the sona toki package.  
 **Example usage:**
 ```python
 from sona_toki.all import Parser, rank_parse
-```
-
-### base.py
-The basic imports for the sona toki package.  
-**Example usage:**
-```python
-from sona_toki.base import Parser, rank_parse
 ```
