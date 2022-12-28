@@ -246,3 +246,10 @@ class Modifier(Object):
     def __repr__(self):
         values = [i[0] for i in [self.head] + self.adjectives]
         return f"Modifier({values}, number={self.number}, ordinal={self.ordinal}, types={self.types})"
+
+class Vocative(ContextPhrase):
+    def __init__(self, tokens):
+        super().__init__(tokens)
+    
+    def __repr__(self):
+        return f"Vocative({self.tokens})"

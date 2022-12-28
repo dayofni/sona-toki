@@ -70,6 +70,8 @@ def gloss_parse(parse):
                     gloss[-1].append(word)
         elif type(token) == ContextPhrase:
             gloss.append([f"CONTEXT-[{gloss_parse(token.tokens)}]"])
+        elif type(token) == Vocative:
+            gloss.append([f"VOC-[{gloss_parse(token.tokens)}]"])
     #print(gloss)
     gloss = " ".join(["-".join(i) for i in gloss])
     return gloss

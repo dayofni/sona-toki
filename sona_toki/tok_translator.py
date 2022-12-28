@@ -23,7 +23,7 @@ def rank_parse(parse):
     ]
     # Limit no. of items in each phrase
     
-    for token in parse:
+    for t, token in enumerate(parse):
         if type(token) in phrases:
             penalty += len([token.head] + token.adjectives) * 5
             # Penalise for uncertain numbers very lightly
@@ -37,7 +37,7 @@ def rank_parse(parse):
             penalty += rank_parse(token.tokens)
         
         elif type(token) == Interjection:
-            penalty += 5
+            penalty += 2
     return penalty
 
 def translate_phrase():

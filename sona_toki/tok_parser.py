@@ -67,7 +67,7 @@ class Parser:
     
     def run(self):
         self.parse_text()
-        self.parse = self.check_grammar()
+        self.parse, self.errors = self.check_grammar()
     
     def parse_text(self):
         parse = {}
@@ -144,8 +144,8 @@ class Parser:
             pos = pos_list.index(i)
             
             if pos > 0:
-                prev_pos = pos_list[pos - 1]
-                prev = parse[prev_pos]
+                prev_pos = list(parse_ret.keys())[-1]
+                prev = parse_ret[prev_pos] 
             else:
                 prev = None
             
@@ -225,6 +225,22 @@ class Parser:
                 parse_ret[i] = Interjection(Phrase(self.tokens[i], item))
                 deleted.append(i)
             
+            elif item == "vocative_particle" and type(prev) in [Phrase, Modifier, Subject, AddSubject]:
+                tokens = []
+                delete = []
+                for k, v in list(parse_ret.items())[::-1]:
+                    if type(v) not in [Phrase, Modifier, Subject, AddSubject]:
+                        print(type(v))
+                        break
+                    elif i > index:
+                        tokens.append(v)
+                        delete.append(k)
+                    else:
+                        break
+                parse_ret[i] = Vocative(tokens[::-1])
+                for key in delete:
+                    parse_ret.pop(key)
+            
             #! Context phrases ---- NOT FINISHED ----
             
             elif item == "context_particle":
@@ -256,7 +272,8 @@ class Parser:
         
         self.parse = [v for k, v in parse_ret.items()]
     
-    def check_grammar(self, inp=None, context=False):
+    def check_grammar(self, inp=None, context=False, voc=False):
+        
         if inp == None:
             inp = self.parse
         
@@ -276,20 +293,31 @@ class Parser:
             Cause,
             Interjection,
             ContextPhrase,
-            Modifier
+            Modifier,
+            Vocative
         ]
+        
+        fails = []
         
         #! Find any incomplete parses
         
-        
         if any([type(i) not in allowed_types for i in inp]):
-            return []
+            #! Look, it's a string. A particle's in the wrong spot. OTHERWISE WE HAVE A PROBLEM.
+            if any([i == "unknown" not in allowed_types for i in inp]):
+                fails.append("UNKNOWN_WORD")
+            if any([type(i) not in allowed_types and i != "unknown" for i in inp]):
+                fails.append("HANGING_PARTICLE")
+            #return []
         
         if len(self.tokens) > 0 and self.tokens[0] in word_tags.keys():
             ignore_li = "ignore_li" in word_tags[self.tokens[0]]
             #print(ignore_li)
+        elif len(self.tokens) <= 0:
+            fails.append("LENGTH_ERROR")
+            ignore_li = False
         else:
-            return []
+            fails.append("PREDICATE_BEFORE_SUBJECT")
+            ignore_li = False
         
         
         parse = []
@@ -299,40 +327,78 @@ class Parser:
         predicate_verb_passed = False
         
         
-        for token in inp:
+        for t, token in enumerate(inp):
+            if t > 0:
+                back = inp[t-1]
+            else:
+                back = None
             parse.append(token)
+            
             if type(token) == Subject:
                 #print(ignore_li, token.ignore_li)
-                if subject_passed or (ignore_li and not token.ignore_li):
-                    return []
+                if "ignore_li" in word_tags[token.head[0]] and "li" in self.tokens:
+                    fails.append("LI_NOT_IGNORED")
+                if subject_passed:
+                    fails.append("HANGING_PHRASE")
                 elif token.number == 0 and token.ordinal:
-                    return []
+                    fails.append("ZEROTH_ORDINAL")
                 else:
                     subject_passed = True
             elif type(token) == AddSubject:
-                if not subject_passed or predicate_verb_passed:
-                    return []
+                if not subject_passed:
+                    fails.append("EN_BEFORE_SUBJECT")
+                elif predicate_verb_passed:
+                    fails.append("EN_AFTER_PREDICATE")
             elif type(token) in [Verb, Predicate, ImpVerb, ImpPredicate]:
+                if voc:
+                    fails.append("FULL_PHRASE_IN_VOCATIVE")
                 if token.number != None and type(token) not in [Predicate, ImpPredicate]:
-                    return []
+                    fails.append("NUMBERED_VERB")
                 if type(token) in [ImpVerb, ImpPredicate]:
                     imperative = True
                 elif not subject_passed:
-                    return []
+                    fails.append("PREDICATE_BEFORE_SUBJECT")
                 predicate_verb_passed = True
             elif type(token) in [DirectObject, IndirectObject, Means, Location, Similar, Cause]:
+                if voc:
+                    fails.append("FULL_PHRASE_IN_VOCATIVE")
                 if not predicate_verb_passed:
-                    return []
+                    fails.append("FINAL_WITHOUT_PREDICATE")
             elif type(token) == Interjection:
                 if context and not subject_passed and len(inp) == 1:
-                    return []
-            elif type(token) == ContextPhrase:
-                phrase_parse = self.check_grammar(token.tokens, context=True)
-                if phrase_parse == []:
-                    return []
+                    fails.append("LONE_INTERJECTION_AS_CONTEXT")
             elif type(token) == Modifier:
+                if type(back) in [Interjection, ContextPhrase, Vocative] or back == None:
+                    fails.append("HANGING_PI_PHRASE")
                 if token.adjectives == [] and not token.number:
-                    return []
-    
-        return parse
+                    fails.append("SOLE_WORD_PI_PHRASE")
+            elif type(token) == ContextPhrase:
+                if voc:
+                    fails.append("FULL_PHRASE_IN_VOCATIVE")
+                phrase_parse, phrase_fails = self.check_grammar(token.tokens, context=True)
+                fails += phrase_fails
+            elif type(token) == Vocative:
+                phrase_parse, phrase_fails = self.check_grammar(token.tokens, context=True, voc=True)
+                fails += phrase_fails
+        if fails != []:
+            parse = []
+        return parse, fails
 
+ERROR_CODES = {
+    "UNKNOWN_WORD": 2,
+    "HANGING_PARTICLE": 0,
+    "LENGTH_ERROR": 2,
+    "NO_SUBJECT": 2,
+    "HANGING_PHRASE": 0,
+    "ZEROTH_ORDINAL": 1,
+    "EN_BEFORE_SUBJECT": 2,
+    "EN_AFTER_PREDICATE": 2,
+    "NUMBERED_VERB": 1,
+    "PREDICATE_BEFORE_SUBJECT": 2,
+    "FINAL_WITHOUT_PREDICATE": 2,
+    "LONE_INTERJECTION_AS_CONTEXT": 2,
+    "SOLE_WORD_PI_PHRASE": 1,
+    "HANGING_PI_PHRASE": 2,
+    "LI_NOT_IGNORED": 2,
+    "FULL_PHRASE_IN_VOCATIVE": 2
+}
